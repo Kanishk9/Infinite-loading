@@ -1,13 +1,12 @@
 import React from "react";
 import "../assets/styles/Styles.css"
 
-const MovieTab = ({ id, title, body }) => {
+const MovieTab = ({ length, fact }) => {
   return (
     <div className="movieContainer">
-      <h2>{title}</h2>
+      <h2>{length}</h2>
       <div className="movieInnerContainer">
-        <span><b>ID:</b> {id}</span>
-        <span><b>Body:</b> {body}</span>
+        <span>{fact}</span>
       </div>
     </div>
   );

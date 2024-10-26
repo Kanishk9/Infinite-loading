@@ -7,3 +7,9 @@
   display: flex;
   flex-direction: column;
 }
+
+.loadingText{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

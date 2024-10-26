@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from "react";
 import MovieTab from "../components/MovieTab";
 
-const BASE_URL = "https://jsonplaceholder.typicode.com/posts";
-
 const Home = () => {
-  const [data, setData] = useState(null);
-  const [page, setPage] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
+  const BASE_URL = `https://catfact.ninja/facts?page=${page}&limit=10`;
+
+  //GET API call
   const fetchData = async () => {
     const response = await fetch(BASE_URL);
     const data = await response.json();
-    setData(data);
+    setData((prevData) => [...prevData, ...data.data]);
     setLoading(false);
   };
 
   useEffect(() => {
+    fetchData();
+  }, [page]);
+
+  useEffect(() => {
     if (loading === true) {
-      fetchData();
+      setPage((prevPage) => prevPage + 1);
     }
   }, [loading]);
 
+  const handleScroll = () => {
+    if (window.scrollY + window.innerHeight > document.body.scrollHeight - 300) {
+      setLoading(true);
+    }
+  };
+
+  //Adding event listner for scroll event
+  window.addEventListener("scroll", handleScroll);
+
   return (
     <>
-      {loading
-        ? "Loading..."
-        : data.map(({ id, title, body }) => (
-            <MovieTab key={id} id={id} title={title} body={body} />
-          ))}
+      {data?.map(({ length, fact }) => (
+        <MovieTab key={length} length={length} fact={fact} />
+      ))}
+      {loading && <h1 className="loadingText">"Loading..."</h1>}
     </>
   );
 };
