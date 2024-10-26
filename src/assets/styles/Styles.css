@@ -1,0 +1,9 @@
+.movieContainer {
+  background-color: aqua;
+  text-align: center;
+}
+
+.movieInnerContainer {
+  display: flex;
+  flex-direction: column;
+}
